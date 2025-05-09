@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/utils"
+	"github.com/gofiber/fiber/v3"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/stretchr/testify/require"
 
 	jwtware "github.com/gofiber/contrib/jwt"
 )
@@ -130,7 +130,7 @@ func TestJwtTokenProcessorFunc(t *testing.T) {
 			},
 		}))
 
-		app.Get("/ok", func(c *fiber.Ctx) error {
+		app.Get("/ok", func(c fiber.Ctx) error {
 			return c.SendString("OK")
 		})
 
@@ -141,8 +141,8 @@ func TestJwtTokenProcessorFunc(t *testing.T) {
 		resp, err := app.Test(req)
 
 		// Assert
-		utils.AssertEqual(t, nil, err)
-		utils.AssertEqual(t, 200, resp.StatusCode)
+		require.Equal(t, nil, err)
+		require.Equal(t, 200, resp.StatusCode)
 	}
 }
 
@@ -168,7 +168,7 @@ func TestJwtFromHeader(t *testing.T) {
 				},
 			}))
 
-			app.Get("/ok", func(c *fiber.Ctx) error {
+			app.Get("/ok", func(c fiber.Ctx) error {
 				return c.SendString("OK")
 			})
 
@@ -179,8 +179,8 @@ func TestJwtFromHeader(t *testing.T) {
 			resp, err := app.Test(req)
 
 			// Assert
-			utils.AssertEqual(t, nil, err)
-			utils.AssertEqual(t, 200, resp.StatusCode)
+			require.Equal(t, nil, err)
+			require.Equal(t, 200, resp.StatusCode)
 		}
 	})
 
@@ -196,7 +196,7 @@ func TestJwtFromHeader(t *testing.T) {
 				},
 			}))
 
-			app.Get("/ok", func(c *fiber.Ctx) error {
+			app.Get("/ok", func(c fiber.Ctx) error {
 				return c.SendString("OK")
 			})
 
@@ -207,8 +207,8 @@ func TestJwtFromHeader(t *testing.T) {
 			resp, err := app.Test(req)
 
 			// Assert
-			utils.AssertEqual(t, nil, err)
-			utils.AssertEqual(t, 400, resp.StatusCode)
+			require.Equal(t, nil, err)
+			require.Equal(t, 400, resp.StatusCode)
 		}
 	})
 }
@@ -235,7 +235,7 @@ func TestJwtFromCookie(t *testing.T) {
 			TokenLookup: "cookie:Token",
 		}))
 
-		app.Get("/ok", func(c *fiber.Ctx) error {
+		app.Get("/ok", func(c fiber.Ctx) error {
 			return c.SendString("OK")
 		})
 
@@ -250,8 +250,8 @@ func TestJwtFromCookie(t *testing.T) {
 		resp, err := app.Test(req)
 
 		// Assert
-		utils.AssertEqual(t, nil, err)
-		utils.AssertEqual(t, 200, resp.StatusCode)
+		require.Equal(t, nil, err)
+		require.Equal(t, 200, resp.StatusCode)
 	}
 }
 
@@ -294,7 +294,7 @@ func TestJwkFromServer(t *testing.T) {
 			JWKSetURLs: []string{server.URL + "/jwks.json"},
 		}))
 
-		app.Get("/ok", func(c *fiber.Ctx) error {
+		app.Get("/ok", func(c fiber.Ctx) error {
 			return c.SendString("OK")
 		})
 
@@ -305,8 +305,8 @@ func TestJwkFromServer(t *testing.T) {
 		resp, err := app.Test(req)
 
 		// Assert
-		utils.AssertEqual(t, nil, err)
-		utils.AssertEqual(t, 200, resp.StatusCode)
+		require.Equal(t, nil, err)
+		require.Equal(t, 200, resp.StatusCode)
 	}
 }
 
@@ -355,7 +355,7 @@ func TestJwkFromServers(t *testing.T) {
 			JWKSetURLs: []string{server.URL + "/jwks.json", server.URL + "/jwks2.json"},
 		}))
 
-		app.Get("/ok", func(c *fiber.Ctx) error {
+		app.Get("/ok", func(c fiber.Ctx) error {
 			return c.SendString("OK")
 		})
 
@@ -366,8 +366,8 @@ func TestJwkFromServers(t *testing.T) {
 		resp, err := app.Test(req)
 
 		// Assert
-		utils.AssertEqual(t, nil, err)
-		utils.AssertEqual(t, 200, resp.StatusCode)
+		require.Equal(t, nil, err)
+		require.Equal(t, 200, resp.StatusCode)
 	}
 }
 
@@ -389,7 +389,7 @@ func TestCustomKeyfunc(t *testing.T) {
 		KeyFunc: customKeyfunc(),
 	}))
 
-	app.Get("/ok", func(c *fiber.Ctx) error {
+	app.Get("/ok", func(c fiber.Ctx) error {
 		return c.SendString("OK")
 	})
 
@@ -400,8 +400,8 @@ func TestCustomKeyfunc(t *testing.T) {
 	resp, err := app.Test(req)
 
 	// Assert
-	utils.AssertEqual(t, nil, err)
-	utils.AssertEqual(t, 200, resp.StatusCode)
+	require.Equal(t, nil, err)
+	require.Equal(t, 200, resp.StatusCode)
 }
 
 func TestMultiKeys(t *testing.T) {
@@ -446,7 +446,7 @@ func TestMultiKeys(t *testing.T) {
 		SigningKeys: keys,
 	}))
 
-	app.Get("/ok", func(c *fiber.Ctx) error {
+	app.Get("/ok", func(c fiber.Ctx) error {
 		return c.SendString("OK")
 	})
 
@@ -458,8 +458,8 @@ func TestMultiKeys(t *testing.T) {
 		resp, err := app.Test(req)
 
 		// Assert
-		utils.AssertEqual(t, nil, err)
-		utils.AssertEqual(t, 200, resp.StatusCode)
+		require.Equal(t, nil, err)
+		require.Equal(t, 200, resp.StatusCode)
 	}
 }
 
